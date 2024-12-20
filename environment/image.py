@@ -5,6 +5,7 @@ import cv2
 
 class Image:
 
+
     def __init__(self):
 
         # Init root window
@@ -18,6 +19,7 @@ class Image:
 
         # Init adjacency matrix to store color for each square 
         self.squareColors = [[0 for x in range(9)] for y in range(9)]
+
 
     def detectSquares(self):
 
@@ -56,7 +58,51 @@ class Image:
         cv2.imwrite('detectedLines.png', image)
 
 
+    def detectLines(self, pos):
+
+        # Remove duplicate positions
+        pos = list(set(pos))
+
+        # Sort line positions
+        pos = sorted(pos)
+
+        # Calculate distance between consecutive positions
+        dists = np.diff(pos)
+
+        # Calculate the mean distance
+        spacing = np.mean(dists)
+
+        # Remove nearby positions
+        indices = []
+        for i in range(len(dists)):
+            if dists[i] < spacing:
+                indices.append(i)
+
+        # Update position list
+        coords = []
+        for i in range(len(pos)):
+            if i not in indices:
+                coords.append(pos[i])
+        
+        return coords
+
+
+    def detectSquares(self, rows, cols):
+
+        # Compute the center coords of each square
+        squares = []
+        for i in range(len(rows) - 1):
+            for j in range(len(cols) - 1):
+                squares.append([
+                    int(np.mean((rows[i], rows[i+1]))),
+                    int(np.mean((cols[j], cols[j+1])))
+                ])
+        
+        return squares
+
+
     def detectBoard(self):
+
         # Load image from filepath
         image = cv2.imread(self.filepath)
 
@@ -77,26 +123,37 @@ class Image:
             image= edges,
             rho= 1,
             theta= np.pi/180,
-            threshold= 5,
-            maxLineGap= 175
+            threshold= 50,
+            maxLineGap= 1000
         )
 
-        # Draw lines on image
+        xvals = []
+        yvals = []
+
+        # Validate lines
         for line in lines:
             x1, y1, x2, y2 = line[0]
 
-            cv2.line(
-                img= image,
-                pt1= (x1, y1),
-                pt2= (x2, y2),
-                color= (0, 255, 0),
-                thickness= 3
-            )
+            # If line is orthogonal
+            if (abs(x2 - x1) < 3 or
+                abs(y2 - y1) < 3):
 
-        # Save image
-        cv2.imwrite('detectedLines.png', image)
-        
+                # If line is horizontal
+                if (abs(x2 - x1) >
+                    abs(y2 - y1)):
+                    yvals.append(y1)
+                else: xvals.append(x1)
 
-i = Image()
-i.detectBoard()
+        rowLines = self.detectLines(yvals)
+        colLines = self.detectLines(xvals)
+
+        if(len(rowLines) ==
+           len(colLines)):
+            squares = self.detectSquares(rowLines, colLines)
+
+            colors = []
+            for square in squares:
+                colors.append(image[square[1], square[0]])
+
+        return colors
 
