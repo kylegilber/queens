@@ -1,3 +1,6 @@
-from environment.board import Board
 from environment.image import Image
-from environment.square import Square
+
+
+img = Image()
+colors = img.detectBoard()
+print(len(colors))

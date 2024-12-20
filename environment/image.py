@@ -21,43 +21,6 @@ class Image:
         self.squareColors = [[0 for x in range(9)] for y in range(9)]
 
 
-    def detectSquares(self):
-
-        # Load image from filepath
-        image = cv2.imread(self.filepath)
-
-        # Convert image to grayscale
-        grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        # Detect edges
-        edges = cv2.Canny(
-            image= grayscale,
-            threshold1= 50,
-            threshold2= 150,
-            apertureSize= 3,
-            L2gradient= True
-        )
-
-        # Find contours in edges
-        contours, hierarchy = cv2.findContours(
-            image= edges,
-            mode= cv2.RETR_TREE,
-            method= cv2.CHAIN_APPROX_SIMPLE
-        )
-
-        # Parse contours for squares
-        for contour in contours:
-
-            epsilon = 0.02 * cv2.arcLength(contour, True)
-            possible = cv2.approxPolyDP(contour, epsilon, True)
-
-            if len(possible) == 4:
-                cv2.drawContours(image, [possible], -1, (0,255,0), 2)
-                cv2.draw
-
-        cv2.imwrite('detectedLines.png', image)
-
-
     def detectLines(self, pos):
 
         # Remove duplicate positions
