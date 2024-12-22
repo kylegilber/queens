@@ -1,9 +1,18 @@
-import tkinter as tk
-import numpy as np
 from tkinter import filedialog
+
+import tkinter as tk
+
+import numpy as np
+
+import webcolors
+
 import cv2
 
+
 class Image:
+    """
+    
+    """
 
 
     def __init__(self):
@@ -16,9 +25,6 @@ class Image:
         self.filepath = filedialog.askopenfilename(
             title= "Select Screenshot",
             filetypes= [("Image files", "*.png;*.jpg;*.jpeg;")])
-
-        # Init adjacency matrix to store color for each square 
-        self.squareColors = [[0 for x in range(9)] for y in range(9)]
 
 
     def detectLines(self, pos):
@@ -116,7 +122,8 @@ class Image:
 
             colors = []
             for square in squares:
-                colors.append(image[square[1], square[0]])
+                color = image[square[1], square[0]]
+                colors.append(webcolors.rgb_to_hex((color[0], color[1], color[2])))
 
         return colors
 
