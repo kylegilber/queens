@@ -11,11 +11,14 @@ import cv2
 
 class Image:
     """
-    
+    Process a user-provided screenshot of the Queens' game board.
     """
 
 
     def __init__(self):
+        """
+        Prompt the user to select and input an image of the game board
+        """
 
         # Init root window
         root = tk.Tk()
@@ -27,50 +30,53 @@ class Image:
             filetypes= [("Image files", "*.png;*.jpg;*.jpeg;")])
 
 
-    def detectLines(self, pos):
+    def getGridlines(self, positions):
+        """
+        Filter lines comprising the game board grid
+
+        :param positions: list of positions corresponding to orthogonal lines
+        :returns: list of positions corresponding to the lines comprising the game board
+        """
 
         # Remove duplicate positions
-        pos = list(set(pos))
+        positions = list(set(positions))
 
         # Sort line positions
-        pos = sorted(pos)
+        positions = sorted(positions)
 
         # Calculate distance between consecutive positions
-        dists = np.diff(pos)
+        dists = np.diff(positions)
 
         # Calculate the mean distance
         spacing = np.mean(dists)
 
         # Remove nearby positions
-        indices = []
-        for i in range(len(dists)):
-            if dists[i] < spacing:
-                indices.append(i)
-
-        # Update position list
-        coords = []
-        for i in range(len(pos)):
-            if i not in indices:
-                coords.append(pos[i])
-        
-        return coords
+        indices = [i for i in range(len(dists)) if dists[i] < spacing]
+        return [positions[i] for i in range(len(positions)) if i not in indices]
 
 
-    def detectSquares(self, rows, cols):
+    def getCentroid(self, horizontalLines, verticalLines):
+        """
+        Compute the center coordinates for each square on the game board
 
-        # Compute the center coords of each square
-        squares = []
-        for i in range(len(rows) - 1):
-            for j in range(len(cols) - 1):
-                squares.append([
-                    int(np.mean((rows[i], rows[i+1]))),
-                    int(np.mean((cols[j], cols[j+1])))
-                ])
-        
-        return squares
+        :param horizontalLines: list of horizontal gridline positions
+        :param verticalLines: list of vertical gridlines positions
+        :returns: list of coordinates corresponding to the center of each square
+        """
+
+        return [[
+            (horizontalLines[i] + horizontalLines[i + 1]) // 2,
+            (verticalLines[j] + verticalLines[j + 1]) // 2
+            ] for i in range(9) for j in range(9)
+        ]
 
 
-    def detectBoard(self):
+    def getSquareColors(self):
+        """
+        Derive game board squares and their colors from user-provided image
+
+        :returns: list of hexadecimal color codes
+        """
 
         # Load image from filepath
         image = cv2.imread(self.filepath)
@@ -113,12 +119,11 @@ class Image:
                     yvals.append(y1)
                 else: xvals.append(x1)
 
-        rowLines = self.detectLines(yvals)
-        colLines = self.detectLines(xvals)
+        horizontalLines = self.getGridlines(yvals)
+        verticalLines = self.getGridlines(xvals)
 
-        if(len(rowLines) ==
-           len(colLines)):
-            squares = self.detectSquares(rowLines, colLines)
+        if(len(horizontalLines) == len(verticalLines)):
+            squares = self.getCentroid(horizontalLines, verticalLines)
 
             colors = []
             for square in squares:

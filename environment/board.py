@@ -22,7 +22,7 @@ class Board:
         """
         Group the squares on the board by color.
 
-        Returns a dictionary whose key is a hex color code, and value is a list with the value of each square of that color.
+        :returns: a dictionary where keys are hex color codes, and values are lists with the values of every square of that color.
         """
 
         colors = defaultdict(list)
