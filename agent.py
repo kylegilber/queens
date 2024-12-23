@@ -2,70 +2,50 @@ from environment.image import Image
 from environment.board import Board
 from collections import defaultdict
 import operator
+import numpy as np
 
 
 def search():
 
-    # Init helper class instances 
+    # Initialize helper class instance
     img = Image()
-    board = Board()
 
-    # Recreate daily board from image
+    # Derive color configuration from user image
     colors = img.detectBoard()
-    board.createBoard(colors)
+    colors = np.reshape(colors, (9,9))
 
-    queue = [(0, board)]
+    # Recreate gameboard
+    startState = Board(colors)
+
+    queue = [(0, startState)]
     visited = []
 
     while queue:
         
-        # Find state w/ smallest heuristic
+        # Find state with smallest heuristic
         i = queue.index(min(queue, key= operator.itemgetter(0)))
-        state = queue.pop(i)
+        state = queue.pop(i)[1]
+        board = state.values
 
-        # Add state to list of visited states
-        visited.append(state[1].getBoard())
+        # Add state to visited list
+        visited.append(board)
 
-        if goalCheck(state[1]):
-            print("")
+        # Output solution if found
+        if heuristic(state) == 0: return state.printBoard()
+
+        #for child in fringe(state[1]):
 
 
-def goalCheck(state):
+def heuristic(state):
 
-    # Init queen counter dict
-    clr = defaultdict(int)
+    values = state.values
+    colors = state.groupByColor()
 
-    # Init queen counter lists 
-    row = [0 for x in range(9)]
-    col = [0 for x in range(9)]
+    # Calculate 'distance' from goal state
+    incorrectRows = sum(1 for col in range(9) if values[col].count(1) != 1)
+    incorrectCols = sum(1 for row in zip(*values) if row.count(1) != 1)
+    incorrectClrs = sum(1 for row in list(colors.keys()) if colors[row].count(1) != 1)
 
-    board = state.getBoard()
-    squares = state.squares
+    return incorrectRows + incorrectCols + incorrectClrs
 
-    for i in range(9):      # Col
-        for j in range(9):  # Row
-            if board[i][j] == 1:
-                
-                # Get square color
-                color = squares[i][j].squareColor
-
-                # Update counters
-                clr[color] += 1
-                col[i] += 1
-                row[j] += 1
-
-    # Convert clr dict to list
-    clr = list(clr.items())
-
-    check = True
-    for i in range(9):
-        if len(clr) < 9:
-            check = False
-        elif(row[i] != 1 or
-           col[i] != 1 or
-           clr[i] != 1):        # POSSIBLE MISTAKE
-            check = False
-
-    return check
-                
 search()
