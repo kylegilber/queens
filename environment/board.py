@@ -16,17 +16,18 @@ class Board:
         """
 
         self.squares = [[Square(colors[y][x], 0) for y in range(9)] for x in range(9)]
+        self.priority = 27
     
 
     def __lt__(self, other):
         """
-        Compare Board objects based on their heuristic value
+        Compare Board objects based on their priority
 
         :param other: a Board class object
-        :returns: whether the first Board object's heuristic value is less than the second
+        :returns: whether the first Board object's priority is less than the second
         """
 
-        return self.heuristic() < other.heuristic()
+        return self.priority < other.priority
 
 
     def getSquareValues(self):
@@ -53,22 +54,6 @@ class Board:
                 colors[square.color].append(square.value)
 
         return colors
-
-
-    def heuristic(self):
-        """
-        Compute the 'distance' a Board state is from the goal state
-
-        :returns: the amount of rows, columns, and color blocks that do not have exactly one queen
-        """
-
-        values = self.getSquareValues()
-        colors = self.groupByColor()
-        incorrectRows = sum(1 for col in range(9) if values[col].count(1) != 1)
-        incorrectCols = sum(1 for row in zip(*values) if row.count(1) != 1)
-        incorrectClrs = sum(1 for row in list(colors.keys()) if colors[row].count(1) != 1)
-
-        return incorrectRows + incorrectCols + incorrectClrs
 
 
     def printBoard(self):
