@@ -16,19 +16,7 @@ class Board:
         """
 
         self.squares = [[Square(colors[y][x], 0) for y in range(9)] for x in range(9)]
-        self.priority = 27
     
-
-    def __lt__(self, other):
-        """
-        Compare Board objects based on their priority
-
-        :param other: a Board class object
-        :returns: whether the first Board object's priority is less than the second
-        """
-
-        return self.priority < other.priority
-
 
     def getSquareValues(self):
         """
@@ -37,7 +25,7 @@ class Board:
         :returns: a matrix of square values
         """
         
-        return tuple(tuple(self.squares[x][y].value for x in range(9)) for y in range(9))
+        return [[self.squares[x][y].value for x in range(9)] for y in range(9)]
     
 
     def groupByColor(self):
@@ -48,20 +36,8 @@ class Board:
         """
 
         colors = defaultdict(list)
-        for col in range(9):
-            for row in range(9):
-                square = self.squares[col][row]
-                colors[square.color].append(square.value)
-
-        return colors
-
-
-    def printBoard(self):
-        """
-        Output the current value of the board's squares
-        """
-
         for row in range(9):
             for col in range(9):
-                print('|', end=str(self.squares[row][col].value))
-            print("|", end='\n')
+                colors[self.squares[row][col].color].append((row, col))
+
+        return colors
