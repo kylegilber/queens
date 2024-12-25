@@ -27,17 +27,3 @@ class Board:
         
         return [[self.squares[x][y].value for x in range(9)] for y in range(9)]
     
-
-    def groupByColor(self):
-        """
-        Group the squares on the board by color.
-
-        :returns: a dictionary where keys are hex color codes, and values are lists with the values of every square of that color.
-        """
-
-        colors = defaultdict(list)
-        for row in range(9):
-            for col in range(9):
-                colors[self.squares[row][col].color].append((row, col))
-
-        return colors
