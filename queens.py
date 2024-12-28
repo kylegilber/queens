@@ -5,7 +5,7 @@ import numpy as np
 
 def queens():
     """
-    Handle the initialization, solving, and result of the Queens puzzle game
+    Handle the initialization, solving, and output of the Queens puzzle game
     """
 
     # Initialize helper class instance

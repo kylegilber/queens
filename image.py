@@ -4,8 +4,6 @@ import tkinter as tk
 
 import numpy as np
 
-import webcolors
-
 import cv2
 
 
@@ -73,9 +71,9 @@ class Image:
 
     def getSquareColors(self):
         """
-        Derive game board squares and their colors from user-provided image
+        Derive game-board square colors from user-provided image
 
-        :returns: list of hexadecimal color codes
+        :returns: list of rbg color values
         """
 
         # Load image from filepath
@@ -102,8 +100,8 @@ class Image:
             maxLineGap= 1000
         )
 
-        xvals = []
-        yvals = []
+        xvals = set()
+        yvals = set()
 
         # Validate lines
         for line in lines:
@@ -116,8 +114,8 @@ class Image:
                 # If line is horizontal
                 if (abs(x2 - x1) >
                     abs(y2 - y1)):
-                    yvals.append(y1)
-                else: xvals.append(x1)
+                    yvals.add(y1)
+                else: xvals.add(x1)
 
         horizontalLines = self.getGridlines(yvals)
         verticalLines = self.getGridlines(xvals)
@@ -125,10 +123,9 @@ class Image:
         if(len(horizontalLines) == len(verticalLines)):
             squares = self.getCentroid(horizontalLines, verticalLines)
 
-            colors = []
+            colorGrid = []
             for square in squares:
                 color = image[square[1], square[0]]
-                colors.append(webcolors.rgb_to_hex((color[0], color[1], color[2])))
+                colorGrid.append(f"{color[0]}{color[1]}{color[2]}")
 
-        return colors
-
+        return colorGrid
