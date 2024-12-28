@@ -1,5 +1,7 @@
 from tkinter import filedialog
 
+from PIL import Image as img
+
 import tkinter as tk
 
 import numpy as np
@@ -26,6 +28,8 @@ class Image:
         self.filepath = filedialog.askopenfilename(
             title= "Select Screenshot",
             filetypes= [("Image files", "*.png;*.jpg;*.jpeg;")])
+        
+        self.squares = []
 
 
     def getGridlines(self, positions):
@@ -121,11 +125,39 @@ class Image:
         verticalLines = self.getGridlines(xvals)
 
         if(len(horizontalLines) == len(verticalLines)):
-            squares = self.getCentroid(horizontalLines, verticalLines)
+            self.squares = self.getCentroid(horizontalLines, verticalLines)
 
             colorGrid = []
-            for square in squares:
+            for square in self.squares:
                 color = image[square[1], square[0]]
                 colorGrid.append(f"{color[0]}{color[1]}{color[2]}")
 
         return colorGrid
+
+
+    def placeQueensOnImage(self, board):
+        """
+        
+        """
+
+        # Calculate square dimensions
+        width = self.squares[1][1] - self.squares[0][1]
+
+        # Open image and resize to fit the squares
+        crown = img.open(r"crown.png").convert("RGBA").resize((width, width))
+
+        # Open user-provided screenshot of the game board
+        queens = img.open(self.filepath)
+
+        # Convert board from matrix to list
+        board = np.array(board).flatten().tolist()
+
+        for i in range(81):
+            if board[i] == 1:
+                queens.paste(crown,
+                    (self.squares[i][1] - int(width / 2),
+                    self.squares[i][0] - int(width / 2)),
+                    crown)
+        
+        queens.save("solution.png", "PNG")
+

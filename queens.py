@@ -27,7 +27,9 @@ def queens():
     # Attempt to solve the Queens puzzle
     if solve(game_board, color_config, color_regions, 0) == False:
         print("Solution not found")
-    else: printBoard(game_board)
+    else:
+        printBoard(game_board) 
+        img.placeQueensOnImage(game_board)
 
 
 def solve(board, colors, regions, column):
