@@ -13,20 +13,20 @@
 
 Install required modules with pip:
 
-> tkinter
-Note: tkinter is included in The Python Standard Library
+> [tkinter]
 
 ```sh
 pip install tk
 ```
+Note: tkinter is included in The Python Standard Library
 
-> pillow
+> [pillow]
 
 ```sh
 pip install pillow
 ```
 
-> numpy
+> [numpy]
 
 ```sh
 pip install numpy
@@ -46,9 +46,14 @@ Kyle Gilbert - gilbert.ke@hotmail.com
 
 ## Acknowledgements
 
-* [LinkedIn Queens](https://www.linkedin.com/games/queens/)
-* [README.md Badges](https://github.com/alexandresanlim/Badges4-README.md-Profile)
+* [linkedin queens](https://www.linkedin.com/games/queens/)
+* [readme.md badges](https://github.com/alexandresanlim/Badges4-README.md-Profile)
+
 
 <!-- Link Definitions -->
 [linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://www.linkedin.com/in/kylegilbertpsu/
+[pillow]: https://pypi.org/project/pillow/
+[numpy]: https://numpy.org/install/
+[cv2]: https://pypi.org/project/opencv-python/
+[tkinter]: https://docs.python.org/3/library/tkinter.html
