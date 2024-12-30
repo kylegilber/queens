@@ -57,13 +57,13 @@ pip install opencv-python
 ## Usage
 
 Take a screenshot of the gameboard.
-![user-screenshot](pictures\example-board.png)
+![user-screenshot](pictures/board.png)
 
 Run queens.py and select the screenshot.
-![select-screenshot](pictures\filedialog.png)
+![select-screenshot](pictures/filedialog.png)
 
 Access the newly-created solution.png file.
-![access-solution](pictures\example-solution.png)
+![access-solution](pictures/output.png)
 
 ## Contact
 
