@@ -18,7 +18,7 @@ Install required modules with pip:
 ```sh
 pip install tk
 ```
-Note: tkinter is included in The Python Standard Library
+>> Note: tkinter is included in The Python Standard Library
 
 > [pillow]
 
@@ -32,7 +32,7 @@ pip install pillow
 pip install numpy
 ```
 
-> cv2
+> [cv2]
 
 ```sh
 pip install opencv-python
@@ -44,11 +44,6 @@ pip install opencv-python
 
 Kyle Gilbert - gilbert.ke@hotmail.com
 
-## Acknowledgements
-
-* [linkedin queens](https://www.linkedin.com/games/queens/)
-* [readme.md badges](https://github.com/alexandresanlim/Badges4-README.md-Profile)
-
 
 <!-- Link Definitions -->
 [linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
@@ -57,3 +52,4 @@ Kyle Gilbert - gilbert.ke@hotmail.com
 [numpy]: https://numpy.org/install/
 [cv2]: https://pypi.org/project/opencv-python/
 [tkinter]: https://docs.python.org/3/library/tkinter.html
+[queens]: https://www.linkedin.com/games/queens/
