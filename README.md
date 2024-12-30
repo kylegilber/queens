@@ -3,9 +3,13 @@
 <div align="center">
   <a href="https://www.linkedin.com/games/queens/" />
     <img alt="queens" height="200px" src="https://static.licdn.com/aero-v1/sc/h/6uvsjtqx2j32uh1a803qygh5y">
-    <br> Queens Solver
   </a>
 </div>
+
+<h1>
+<p align= "center">
+    <br>Queens Solver
+</h1>
 
 
 ## About
