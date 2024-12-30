@@ -1,6 +1,4 @@
 [![LinkedIn][linkedin-badge]][linkedin-url]
-[linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
-[linkedin-url]: https://www.linkedin.com/in/kylegilbertpsu/
 
 <div align="center">
   <a href="https://www.linkedin.com/games/queens/" />
@@ -16,7 +14,7 @@
 Install required modules with pip:
 
 > tkinter
->> Note: tkinter is included in The Python Standard Library
+Note: tkinter is included in The Python Standard Library
 
 ```sh
 pip install tk
@@ -50,3 +48,7 @@ Kyle Gilbert - gilbert.ke@hotmail.com
 
 * [LinkedIn Queens](https://www.linkedin.com/games/queens/)
 * [README.md Badges](https://github.com/alexandresanlim/Badges4-README.md-Profile)
+
+<!-- Link Definitions -->
+[linkedin-badge]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
+[linkedin-url]: https://www.linkedin.com/in/kylegilbertpsu/
