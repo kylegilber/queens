@@ -23,6 +23,8 @@ A solver for LinkedIn's Queens game. [Queens] is one of LinkedIn's four daily pu
 
 The program prompts you to provide a screenshot of the initial Queens gameboard. Then, it loads the image and detects the lines on the board, allowing it to determine the position of each square in the grid. After extracting the square colors, the program uses backtracking to identify the correct queen placements, which are outputted in the terminal and on a new PNG image.
 
+##### I have never and do not intend to use this to cheat at Queens -- that would defeat the fun of playing.
+
 ## Prerequisites
 
 #### Install required modules with pip:
