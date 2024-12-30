@@ -137,14 +137,16 @@ class Image:
 
     def placeQueensOnImage(self, board):
         """
-        
+        Overlay crown PNGs on original screenshot and output the new image depicting solution
+
+        :param board: matrix representing queen placement on board
         """
 
         # Calculate square dimensions
         width = self.squares[1][1] - self.squares[0][1]
 
         # Open image and resize to fit the squares
-        crown = img.open(r"crown.png").convert("RGBA").resize((width, width))
+        crown = img.open("pictures\crown.png").convert("RGBA").resize((width, width))
 
         # Open user-provided screenshot of the game board
         queens = img.open(self.filepath)
