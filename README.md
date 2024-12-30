@@ -3,22 +3,32 @@
 <div align="center">
   <a href="https://www.linkedin.com/games/queens/" />
     <img alt="queens" height="200px" src="https://static.licdn.com/aero-v1/sc/h/6uvsjtqx2j32uh1a803qygh5y">
+    <br> Queens Solver
   </a>
 </div>
 
 
-## Project Description
+## About
+
+A solver for LinkedIn's Queens game. [Queens] is one of LinkedIn's four daily puzzle games. The game involves arranging queens on a 9-by-9 grid with the following conditions:
+
+- Exactly one queen must be placed in every row
+- Exactly one queen must be placed in every column
+- Exactly one queen must be placed in every colored region
+- A queen cannot be placed next to another queen
+
+The program prompts you to provide a screenshot of the initial Queens gameboard. Then, it loads the image and detects the lines on the board, allowing it to determine the position of each square in the grid. After extracting the square colors, the program uses backtracking to identify the correct queen placements, which are outputted in the terminal and on a new PNG image.
 
 ## Prerequisites
 
-Install required modules with pip:
+#### Install required modules with pip:
 
 > [tkinter]
+| Note: tkinter is included in The Python Standard Library
 
 ```sh
 pip install tk
 ```
->> Note: tkinter is included in The Python Standard Library
 
 > [pillow]
 
@@ -52,4 +62,4 @@ Kyle Gilbert - gilbert.ke@hotmail.com
 [numpy]: https://numpy.org/install/
 [cv2]: https://pypi.org/project/opencv-python/
 [tkinter]: https://docs.python.org/3/library/tkinter.html
-[queens]: https://www.linkedin.com/games/queens/
+[Queens]: https://www.linkedin.com/games/queens/
