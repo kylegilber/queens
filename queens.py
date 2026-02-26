@@ -1,7 +1,6 @@
 from image import Image
-
 import numpy as np
-
+import random
 
 def queens():
     """
@@ -28,7 +27,7 @@ def queens():
     if solve(game_board, color_config, color_regions, 0) == False:
         print("Solution not found")
     else:
-        printBoard(game_board) 
+        print_board(game_board) 
         img.placeQueensOnImage(game_board)
 
 
@@ -101,7 +100,7 @@ def validate(board, row, col):
     return True
 
 
-def printBoard(board):
+def print_board(board):
     """
     Output the current value of the board's squares
     """
@@ -111,6 +110,49 @@ def printBoard(board):
             print('|', end=str(board[row][col]))
         print("|", end='\n')
 
+
+def generate_color_regions():
+    """
+    Generate a random configuration of 9 color-regions on the board
+    using a flood-fill expansion from randomly placed seeds
+
+    :returns: 9x9 matrix where each cell value indicates its color region
+    """
+
+    colors = np.full((9, 9), -1, dtype=np.int8)
+
+    # Randomly select 9 seed cells
+    cells = [(r, c) for r in range(9) for c in range(9)]
+    random.shuffle(cells)
+    seeds = cells[:9]
+ 
+    # Assign each seed a unique color
+    for color, (r, c) in enumerate(seeds):
+        colors[r, c] = color
+    
+    unassigned = set(cells[9:])
+
+    # Designate seeds as static (single-cell, never expand)
+    num_static = random.choices([0, 1, 2, 3], weights=[50, 30, 15, 5])[0]
+    static = set(random.sample(range(9), num_static))
+    
+    # Non-static cells whose neighbors haven't been expanded yet
+    frontier = [seed for i, seed in enumerate(seeds) if i not in static]
+
+    NEIGHBORS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    while unassigned:
+        next_frontier = []
+        for (r, c) in frontier:
+            for (dr, dc) in NEIGHBORS:
+                nr, nc = r + dr, c + dc
+                if (nr, nc) in unassigned:
+                    colors[nr, nc] = colors[r, c]
+                    unassigned.remove((nr, nc))
+                    next_frontier.append((nr, nc))
+        frontier = next_frontier if next_frontier else list(unassigned)
+
+    return colors
 
 if __name__ == "__main__":
     queens()
